@@ -1,10 +1,11 @@
-package br.cefetmg.games;
+                        package br.cefetmg.games;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -24,6 +25,7 @@ public class Game extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
+    private Sprite jogador;
     
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
@@ -36,8 +38,9 @@ public class Game extends ApplicationAdapter {
         batch = new SpriteBatch();
         mapLevelsTextures = new Texture[2];
         mapLevelsTextures[0] = new Texture("map-level-1.png");
-
-        
+        mapLevelsTextures[1] = new Texture("map-level-2.png");
+        jogador = new Sprite(new Texture("goomba.png"));
+        jogador.setPosition(50,20);
         // cor de fundo da tela: branco
         Gdx.gl.glClearColor(1, 1, 1, 1);        
     }
@@ -72,6 +75,9 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
+            jogador.draw(batch);
+            batch.draw(mapLevelsTextures[1], 0, 0);
+            
 
         batch.end();
     }
@@ -89,6 +95,12 @@ public class Game extends ApplicationAdapter {
     public void update(float delta) {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+            jogador.setPosition((jogador.getX()-1), jogador.getY());
+        }
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            jogador.setPosition((jogador.getX()+1), jogador.getY());
         }
 
         // ...
