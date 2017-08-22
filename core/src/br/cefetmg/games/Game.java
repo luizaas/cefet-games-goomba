@@ -25,7 +25,7 @@ public class Game extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
-    private Sprite jogador;
+    private Goomba jogador;
     
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
@@ -39,8 +39,7 @@ public class Game extends ApplicationAdapter {
         mapLevelsTextures = new Texture[2];
         mapLevelsTextures[0] = new Texture("map-level-1.png");
         mapLevelsTextures[1] = new Texture("map-level-2.png");
-        jogador = new Sprite(new Texture("goomba.png"));
-        jogador.setPosition(50,20);
+        jogador = new Goomba(new Texture("goomba-spritesheet.png"));
         // cor de fundo da tela: branco
         Gdx.gl.glClearColor(1, 1, 1, 1);        
     }
@@ -75,7 +74,7 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
-            jogador.draw(batch);
+            jogador.render(batch);
             batch.draw(mapLevelsTextures[1], 0, 0);
             
 
@@ -96,18 +95,7 @@ public class Game extends ApplicationAdapter {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyPressed(Keys.LEFT)&& jogador.getX()>0) {
-            jogador.setPosition((jogador.getX()-1), jogador.getY());
-        }
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)&&jogador.getX()<Gdx.graphics.getWidth()-jogador.getWidth()) {
-            jogador.setPosition((jogador.getX()+1), jogador.getY());
-        }
-        if (Gdx.input.isKeyPressed(Keys.UP) && jogador.getY()<Gdx.graphics.getHeight()-jogador.getHeight()) {
-            jogador.setPosition(jogador.getX(),(jogador.getY()+1));
-        }
-        if (Gdx.input.isKeyPressed(Keys.DOWN)&&jogador.getY()>0) {
-            jogador.setPosition(jogador.getX(),(jogador.getY()-1));
-        }
+        jogador.update();
 
         // ...
     }
